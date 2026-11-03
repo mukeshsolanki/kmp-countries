@@ -1,0 +1,21 @@
+kmp-countries
+
+Source code: MIT License, see LICENSE.
+
+Bundled data: Countries States Cities Database by dr5hn and contributors
+https://github.com/dr5hn/countries-states-cities-database
+Release v5.2.0-export.1, commit 9b255c45fc53e02a8dff547d88558d4fe91784d5
+Licensed under the Open Database License (ODbL) v1.0, see licenses/ODbL-1.0.txt.
+
+Changes made to the data, by scripts/generate_data.py:
+- Kept only country, state and city fields exposed by this library's API.
+- Prefixed phone codes with "+".
+- Removed repeated city names within the same state.
+- Re-encoded the result as delimited text inside generated Kotlin source files:
+  countries/src/commonMain/kotlin/com/mukeshsolanki/countries/generated/CountryData.kt
+  countries-geo/src/commonMain/kotlin/com/mukeshsolanki/countries/geo/generated/GeoData.kt
+
+This modified data is also offered under ODbL v1.0.
+
+Upstream source credits and notices are in the licenses/ directory, copied
+unchanged from the release above. Keep them with copies of the data.

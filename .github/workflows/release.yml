@@ -1,0 +1,89 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to release, for example 0.1.0"
+        required: true
+
+permissions:
+  contents: write
+
+concurrency: release
+
+jobs:
+  release:
+    runs-on: macos-latest
+    env:
+      VERSION: ${{ inputs.version }}
+      PAGES_DIR: ${{ github.workspace }}/../maven-pages
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Validate version
+        run: |
+          [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "Version must look like 1.2.3"; exit 1; }
+          if git rev-parse -q --verify "refs/tags/$VERSION" >/dev/null; then echo "Tag $VERSION already exists"; exit 1; fi
+
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: "25"
+          cache: gradle
+
+      - uses: android-actions/setup-android@v4
+
+      - name: Run tests
+        run: ./gradlew :kmp-countries:testAndroidHostTest :kmp-countries-geo:testAndroidHostTest :kmp-countries:iosSimulatorArm64Test :kmp-countries-geo:iosSimulatorArm64Test
+
+      - name: Publish Maven repository into gh-pages
+        run: |
+          if git ls-remote --exit-code --heads origin gh-pages >/dev/null; then
+            git fetch origin gh-pages:refs/remotes/origin/gh-pages
+            git worktree add -B gh-pages "$PAGES_DIR" origin/gh-pages
+          else
+            git worktree add --orphan -b gh-pages "$PAGES_DIR"
+          fi
+          touch "$PAGES_DIR/.nojekyll"
+          ./gradlew publishAllPublicationsToReleaseRepository -PreleaseRepoDir="$PAGES_DIR" -PlibVersion="$VERSION"
+
+      - name: Build XCFrameworks
+        run: |
+          ./gradlew :kmp-countries:assembleKmpCountriesReleaseXCFramework :kmp-countries-geo:assembleKmpCountriesGeoReleaseXCFramework -PlibVersion="$VERSION"
+          ditto -c -k --sequesterRsrc --keepParent countries/build/XCFrameworks/release/KmpCountries.xcframework KmpCountries.xcframework.zip
+          ditto -c -k --sequesterRsrc --keepParent countries-geo/build/XCFrameworks/release/KmpCountriesGeo.xcframework KmpCountriesGeo.xcframework.zip
+
+      - name: Update Package.swift
+        run: |
+          update_target() {
+            CHECKSUM="$(swift package compute-checksum "$1.xcframework.zip")" TARGET="$1" \
+              perl -0pi -e 's{download/[^/]+/\Q$ENV{TARGET}\E(\.xcframework\.zip",\s*checksum: ")[0-9a-f]+}{download/$ENV{VERSION}/$ENV{TARGET}$1$ENV{CHECKSUM}}' Package.swift
+          }
+          update_target KmpCountries
+          update_target KmpCountriesGeo
+
+      - name: Commit and tag
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Package.swift
+          git commit -m "Release $VERSION"
+          git tag "$VERSION"
+          git -C "$PAGES_DIR" add -A
+          git -C "$PAGES_DIR" commit -m "Publish $VERSION"
+
+      - name: Package release extras
+        run: |
+          (cd "$PAGES_DIR" && zip -qr "$GITHUB_WORKSPACE/maven-repo.zip" . -x '.git' -x '.nojekyll')
+          zip -qr licenses.zip LICENSE NOTICE licenses
+
+      - name: Push and create the release
+        run: |
+          git push origin "HEAD:$GITHUB_REF_NAME" "refs/tags/$VERSION"
+          git -C "$PAGES_DIR" push origin gh-pages
+          gh release create "$VERSION" --title "$VERSION" --generate-notes \
+            KmpCountries.xcframework.zip KmpCountriesGeo.xcframework.zip maven-repo.zip licenses.zip
