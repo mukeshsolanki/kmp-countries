@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>kmp-countries integration guide</title>
+<meta name="description" content="Add offline countries, states and cities to Android, iOS, Kotlin Multiplatform and Compose Multiplatform apps.">
+<style>
+  :root {
+    color-scheme: light dark;
+    --paper: #eef4f3;
+    --ink: #123239;
+    --muted: #47636a;
+    --line: #b9cfcf;
+    --grid: #c9dcdb;
+    --link: #0b6472;
+    --code-bg: #dfeaea;
+    --warn: #8a4b08;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #0d262d;
+      --ink: #e4efee;
+      --muted: #a3bcbd;
+      --line: #2f5059;
+      --grid: #1b3b44;
+      --link: #7fd0da;
+      --code-bg: #143139;
+      --warn: #f0b878;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font: 1.0625rem/1.65 "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  }
+  a { color: var(--link); text-underline-offset: 0.15em; }
+  a:focus-visible, pre:focus-visible { outline: 3px solid var(--link); outline-offset: 2px; }
+  .wrap { max-width: 44rem; margin: 0 auto; padding: 0 16px; }
+  header {
+    border-bottom: 1px solid var(--line);
+    background-color: var(--paper);
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 4rem 4rem;
+    background-position: center top;
+    padding: 4.5rem 0 3.5rem;
+  }
+  h1 {
+    margin: 0 0 1.25rem;
+    font-size: clamp(2.25rem, 8vw, 3.75rem);
+    line-height: 1.08;
+    font-weight: 400;
+    letter-spacing: -0.015em;
+  }
+  .lede { margin: 0 0 0.5rem; font-size: 1.1875rem; max-width: 36rem; }
+  .release { margin: 0; color: var(--muted); }
+  main { padding: 1rem 0 3rem; }
+  h2 { margin: 3rem 0 0.75rem; font-size: 1.75rem; line-height: 1.2; font-weight: 400; }
+  h3 { margin: 2rem 0 0.5rem; font-size: 1.1875rem; line-height: 1.3; }
+  p, ul { margin: 0 0 1rem; }
+  li { margin-bottom: 0.35rem; }
+  code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  code { font-size: 0.875em; overflow-wrap: anywhere; }
+  pre {
+    margin: 0 0 1.25rem;
+    padding: 1rem;
+    overflow-x: auto;
+    background: var(--code-bg);
+    border-left: 3px solid var(--line);
+    font-size: 0.875rem;
+    line-height: 1.55;
+  }
+  pre code { font-size: inherit; overflow-wrap: normal; }
+  .warn { color: var(--warn); }
+  blockquote { margin: 0 0 1rem; padding-left: 1rem; border-left: 3px solid var(--line); font-style: italic; }
+  footer { border-top: 1px solid var(--line); padding: 1.5rem 0 2.5rem; color: var(--muted); }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>Countries, states and cities, with no network call</h1>
+    <p class="lede">An offline data library for Android, iOS, Kotlin Multiplatform and Compose Multiplatform: 250 countries, 5,327 states and 149,055 cities. There's no init call, permission or asset setup.</p>
+    <p class="release">Latest release: <strong>@VERSION@</strong></p>
+  </div>
+</header>
+
+<main class="wrap">
+  <h2>Choose a library</h2>
+  <ul>
+    <li><code>kmp-countries</code> if you only need countries.</li>
+    <li><code>kmp-countries-geo</code> if you also need states and cities. It includes <code>kmp-countries</code>.</li>
+  </ul>
+
+  <h2>Install</h2>
+
+  <h3>Android, KMP and Compose Multiplatform</h3>
+  <p>Add the Maven repository to your settings file:</p>
+  <pre tabindex="0" aria-label="settings.gradle.kts"><code>// settings.gradle.kts
+dependencyResolutionManagement {
+    repositories {
+        maven("https://mukeshsolanki.github.io/kmp-countries")
+    }
+}</code></pre>
+  <p>Then add the dependency:</p>
+  <pre tabindex="0" aria-label="build.gradle.kts"><code>// build.gradle.kts
+implementation("com.mukeshsolanki:kmp-countries:@VERSION@")
+implementation("com.mukeshsolanki:kmp-countries-geo:@VERSION@") // optional, includes kmp-countries</code></pre>
+  <p>Requirements:</p>
+  <ul>
+    <li><strong>Android:</strong> <code>minSdk</code> 24 and Kotlin 2.2 or newer. Tested with AGP 9.5's built-in Kotlin (2.2.10).</li>
+    <li><strong>KMP and Compose Multiplatform with iOS targets:</strong> iOS 15 and Kotlin 2.4 or newer. Kotlin 2.3 can't read the iOS artifacts.</li>
+  </ul>
+
+  <h3>Swift (Swift Package Manager)</h3>
+  <p>Add this package, then choose <strong>one</strong> product:</p>
+  <pre tabindex="0" aria-label="Package URL"><code>https://github.com/mukeshsolanki/kmp-countries</code></pre>
+  <ul>
+    <li><code>KmpCountries</code>: countries only.</li>
+    <li><code>KmpCountriesGeo</code>: countries, states and cities.</li>
+  </ul>
+  <p class="warn"><code>KmpCountriesGeo</code> already contains everything in <code>KmpCountries</code>. Don't link both, because each would have its own incompatible <code>Country</code> type.</p>
+  <p>iOS simulators on Intel Macs aren't supported.</p>
+
+  <h2>Usage</h2>
+  <pre tabindex="0" aria-label="Kotlin usage"><code>import com.mukeshsolanki.countries.Countries
+import com.mukeshsolanki.countries.geo.directCities
+import com.mukeshsolanki.countries.geo.searchCities
+import com.mukeshsolanki.countries.geo.state
+import com.mukeshsolanki.countries.geo.states
+
+val all = Countries.all
+val us = Countries.byIso2("us")!!                // case-insensitive
+val japan = Countries.byIso3("JPN")
+val nanp = Countries.byPhoneCode("+1")           // exact match, returns 25 countries
+val euro = Countries.byCurrency("EUR")
+val matches = Countries.search("german")         // name and translations
+
+us.flagEmoji                                     // 🇺🇸
+Countries.byIso2("DE")!!.localizedName("pt-BR")  // Alemanha, falls back to the English name
+
+val states = us.states()
+val alabama = us.state("AL")                     // name "Alabama", type "state"
+val cities = alabama!!.cities
+val found = us.searchCities("Springfield")       // each match has a state and a city</code></pre>
+  <pre tabindex="0" aria-label="Swift usage"><code>import KmpCountriesGeo
+
+let us = Countries.shared.byIso2(code: "US")
+let states = us?.states()</code></pre>
+  <p>Calls are synchronous and thread-safe. Data is parsed on first use, and geo data is parsed per country.</p>
+
+  <h2>Credit the data</h2>
+  <p>The bundled data is licensed under ODbL 1.0, and that applies to any app or product you ship with this library. Credit the source, for example:</p>
+  <blockquote>Contains data from the Countries States Cities Database, © dr5hn and contributors, licensed under ODbL 1.0.</blockquote>
+  <p>Keep the <a href="https://github.com/mukeshsolanki/kmp-countries/tree/main/licenses">license files</a> with anything you redistribute. They're also attached to each <a href="https://github.com/mukeshsolanki/kmp-countries/releases">GitHub release</a> as <code>licenses.zip</code>. This isn't legal advice, and the <a href="https://github.com/mukeshsolanki/kmp-countries#license">full license notes</a> cover the details.</p>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Read the <a href="https://github.com/mukeshsolanki/kmp-countries#readme">README</a> for what the data does and doesn't include, artifact sizes and data freshness. The library code is MIT licensed.</p>
+  </div>
+</footer>
+</body>
+</html>

@@ -49,6 +49,7 @@ jobs:
             git worktree add --orphan -b gh-pages "$PAGES_DIR"
           fi
           touch "$PAGES_DIR/.nojekyll"
+          sed "s/@VERSION@/$VERSION/g" site/index.html > "$PAGES_DIR/index.html"
           ./gradlew publishAllPublicationsToReleaseRepository -PreleaseRepoDir="$PAGES_DIR" -PlibVersion="$VERSION"
 
       - name: Build XCFrameworks
@@ -78,7 +79,7 @@ jobs:
 
       - name: Package release extras
         run: |
-          (cd "$PAGES_DIR" && zip -qr "$GITHUB_WORKSPACE/maven-repo.zip" . -x '.git' -x '.nojekyll')
+          (cd "$PAGES_DIR" && zip -qr "$GITHUB_WORKSPACE/maven-repo.zip" . -x '.git' -x '.nojekyll' -x 'index.html')
           zip -qr licenses.zip LICENSE NOTICE licenses
 
       - name: Push and create the release
