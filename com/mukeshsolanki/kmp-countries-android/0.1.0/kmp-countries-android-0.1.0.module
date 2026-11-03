@@ -1,0 +1,102 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../kmp-countries/0.1.0/kmp-countries-0.1.0.module",
+    "group": "com.mukeshsolanki",
+    "module": "kmp-countries",
+    "version": "0.1.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.8.2"
+    }
+  },
+  "variants": [
+    {
+      "name": "androidApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "kmp-countries.aar",
+          "url": "kmp-countries-android-0.1.0.aar",
+          "size": 52885,
+          "sha512": "1dc1f398d169c088ef2f8dca9d61ab1d40340857e7914b3a80011987bc682b1f745a0e66c537a9c75a15fc0d257f39ff6fa2ed3732a0bd8f9bfd9f8479b73094",
+          "sha256": "cbd85ecee363567afdd48d50d68229edd2840aa367d2b38d6c654d1c7f7944af",
+          "sha1": "3593e63694afcd16e7c26fd4bdcbb5e47333d102",
+          "md5": "e1c8f85c17bf78393b155aae44227d3a"
+        }
+      ]
+    },
+    {
+      "name": "androidRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "kmp-countries.aar",
+          "url": "kmp-countries-android-0.1.0.aar",
+          "size": 52885,
+          "sha512": "1dc1f398d169c088ef2f8dca9d61ab1d40340857e7914b3a80011987bc682b1f745a0e66c537a9c75a15fc0d257f39ff6fa2ed3732a0bd8f9bfd9f8479b73094",
+          "sha256": "cbd85ecee363567afdd48d50d68229edd2840aa367d2b38d6c654d1c7f7944af",
+          "sha1": "3593e63694afcd16e7c26fd4bdcbb5e47333d102",
+          "md5": "e1c8f85c17bf78393b155aae44227d3a"
+        }
+      ]
+    },
+    {
+      "name": "androidSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "files": [
+        {
+          "name": "kmp-countries-android-0.1.0-sources.jar",
+          "url": "kmp-countries-android-0.1.0-sources.jar",
+          "size": 49912,
+          "sha512": "1646052261b450a213c12804654298428319731a2c24b27b7b216b62a81d73796402f5ea4f96e6c1ba1ae80f7e48b6c36a9e9806ab7dfe147c6049190cb77dbd",
+          "sha256": "89770ffd6898715d0c19943eb1e1d4f7e87c679b440011badc5417b065f4945b",
+          "sha1": "ef39ae05ff5af02c12860426c54ca6764e852fc9",
+          "md5": "232999fc7e9047ef43582bb19c237576"
+        }
+      ]
+    }
+  ]
+}

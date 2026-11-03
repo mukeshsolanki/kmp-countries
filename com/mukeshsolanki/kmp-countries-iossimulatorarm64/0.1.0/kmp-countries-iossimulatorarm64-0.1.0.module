@@ -1,0 +1,102 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../kmp-countries/0.1.0/kmp-countries-0.1.0.module",
+    "group": "com.mukeshsolanki",
+    "module": "kmp-countries",
+    "version": "0.1.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.8.2"
+    }
+  },
+  "variants": [
+    {
+      "name": "iosSimulatorArm64ApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "kmp-countries-iosSimulatorArm64Main-0.1.0.klib",
+          "url": "kmp-countries-iossimulatorarm64-0.1.0.klib",
+          "size": 58155,
+          "sha512": "691f4eb2acfd5e99e00614c849d2960aae7ae7a5af9526c4bfad9c47e553937887d53e3c8a2e805fb1ef496661f75aaf7653fbf576f2d29bab1b2bbc0a8ab327",
+          "sha256": "d77096cbcba0d9792a5ed30e60ad852c6a6cfb069abe5b7a2d9f5cb7a95c7ffa",
+          "sha1": "c36ccdac8bafe788cc13b18ff9cdabb0339c9724",
+          "md5": "05c4dc475477463b97712cf0642bf442"
+        }
+      ]
+    },
+    {
+      "name": "iosSimulatorArm64SourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "files": [
+        {
+          "name": "kmp-countries-iossimulatorarm64-0.1.0-sources.jar",
+          "url": "kmp-countries-iossimulatorarm64-0.1.0-sources.jar",
+          "size": 49912,
+          "sha512": "1646052261b450a213c12804654298428319731a2c24b27b7b216b62a81d73796402f5ea4f96e6c1ba1ae80f7e48b6c36a9e9806ab7dfe147c6049190cb77dbd",
+          "sha256": "89770ffd6898715d0c19943eb1e1d4f7e87c679b440011badc5417b065f4945b",
+          "sha1": "ef39ae05ff5af02c12860426c54ca6764e852fc9",
+          "md5": "232999fc7e9047ef43582bb19c237576"
+        }
+      ]
+    },
+    {
+      "name": "iosSimulatorArm64MetadataElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "kmp-countries-iossimulatorarm64-0.1.0-metadata.jar",
+          "url": "kmp-countries-iossimulatorarm64-0.1.0-metadata.jar",
+          "size": 261,
+          "sha512": "1487e5a20c9e4d74f298e07c42e96a61be11b7a768c3fbc199ee138cd68e1fc2267d1cfe3f11f288acc05df755315344d052cc5f6f751f126ab4fe1caa5125ea",
+          "sha256": "c6deada2fac53b8ea6523dbda77597b128006674616f140f04df23264c6d1aa3",
+          "sha1": "2ad14aed781c4a73ed4dbb421966d408a0a06686",
+          "md5": "f43436d6bec321290f6af228ad602604"
+        }
+      ]
+    }
+  ]
+}

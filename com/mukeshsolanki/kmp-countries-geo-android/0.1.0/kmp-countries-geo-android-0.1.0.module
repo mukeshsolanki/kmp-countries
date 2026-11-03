@@ -1,0 +1,116 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../kmp-countries-geo/0.1.0/kmp-countries-geo-0.1.0.module",
+    "group": "com.mukeshsolanki",
+    "module": "kmp-countries-geo",
+    "version": "0.1.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.8.2"
+    }
+  },
+  "variants": [
+    {
+      "name": "androidApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "dependencies": [
+        {
+          "group": "com.mukeshsolanki",
+          "module": "kmp-countries",
+          "version": {
+            "requires": "0.1.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "kmp-countries-geo.aar",
+          "url": "kmp-countries-geo-android-0.1.0.aar",
+          "size": 795235,
+          "sha512": "a9a56002279e12ff5d3201ede25c5770023312d34689a7bb9215393de26a97f9fc5f5cff3207e2de6f12051804f511eb5245443b1d286eb855011c30562b1b5d",
+          "sha256": "91066e4feff7b0b281893d744d9d6e2e0ada4dddf7f97a692c7990f66df77aac",
+          "sha1": "4178a5fe2ac77feddad68c5b894ea8548d716da7",
+          "md5": "2f10b125de465b1b3d5f22c33b510fa5"
+        }
+      ]
+    },
+    {
+      "name": "androidRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "dependencies": [
+        {
+          "group": "com.mukeshsolanki",
+          "module": "kmp-countries",
+          "version": {
+            "requires": "0.1.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "kmp-countries-geo.aar",
+          "url": "kmp-countries-geo-android-0.1.0.aar",
+          "size": 795235,
+          "sha512": "a9a56002279e12ff5d3201ede25c5770023312d34689a7bb9215393de26a97f9fc5f5cff3207e2de6f12051804f511eb5245443b1d286eb855011c30562b1b5d",
+          "sha256": "91066e4feff7b0b281893d744d9d6e2e0ada4dddf7f97a692c7990f66df77aac",
+          "sha1": "4178a5fe2ac77feddad68c5b894ea8548d716da7",
+          "md5": "2f10b125de465b1b3d5f22c33b510fa5"
+        }
+      ]
+    },
+    {
+      "name": "androidSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "files": [
+        {
+          "name": "kmp-countries-geo-android-0.1.0-sources.jar",
+          "url": "kmp-countries-geo-android-0.1.0-sources.jar",
+          "size": 842646,
+          "sha512": "15579ae359ff19de56f16c6a5c2e5dcec5ac913fe650c3dc65d6e96056fed3c6320c0d19d01fc7eb111ead4cd2c385f0d587aa254b4f860ec8cc369f09801dd5",
+          "sha256": "de74e48551344a37345a281432a7c55b5f79f4cdc4a84686960c91171b64b235",
+          "sha1": "24de51f99e0c9a672f72f5f97117b72ce982047e",
+          "md5": "a420cfe4e0154326638af21abc25d0f7"
+        }
+      ]
+    }
+  ]
+}
