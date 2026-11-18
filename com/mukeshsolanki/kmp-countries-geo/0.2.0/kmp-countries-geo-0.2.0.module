@@ -1,0 +1,226 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.mukeshsolanki",
+    "module": "kmp-countries-geo",
+    "version": "0.2.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.8.2"
+    }
+  },
+  "variants": [
+    {
+      "name": "metadataApiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.platform.type": "common"
+      },
+      "dependencies": [
+        {
+          "group": "com.mukeshsolanki",
+          "module": "kmp-countries",
+          "version": {
+            "requires": "0.2.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "kmp-countries-geo-metadata-0.2.0.jar",
+          "url": "kmp-countries-geo-0.2.0.jar",
+          "size": 4234,
+          "sha512": "d2f3f9df54708ef45434ce72b6648245236e591a29c6daefbeaa110583c475c51e774ce46703914bbf3a7be6cec271e9424f096da2c1a42016767b3b6f7251f8",
+          "sha256": "6424d6efd963ec29ddf5825f81c65dc21f95719f1577e6cbf618902ba3ee7ad8",
+          "sha1": "ca14ca832e486c44192987c992336d265bacf046",
+          "md5": "ebf61abb1248bdbb50be8a868561840c"
+        }
+      ]
+    },
+    {
+      "name": "metadataSourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.platform.type": "common"
+      },
+      "files": [
+        {
+          "name": "kmp-countries-geo-kotlin-0.2.0-sources.jar",
+          "url": "kmp-countries-geo-0.2.0-sources.jar",
+          "size": 2105416,
+          "sha512": "06ee9561940da9c3c789e32775811961664618f3504e169cbc5a4da548c6a4ee2a400b63ba8461c07fa81b2bb8bad5da3b2d239382e49ec01023760d627a38b7",
+          "sha256": "7937edea2deda1c897ed933a85e6952f685bf7bde45ffd5de48077c1e092345f",
+          "sha1": "6a014508a29b848641ad0cc22350b30cc6d7d860",
+          "md5": "431a3a5a4f797b8e670830d2ae4ad4ce"
+        }
+      ]
+    },
+    {
+      "name": "androidApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../kmp-countries-geo-android/0.2.0/kmp-countries-geo-android-0.2.0.module",
+        "group": "com.mukeshsolanki",
+        "module": "kmp-countries-geo-android",
+        "version": "0.2.0"
+      }
+    },
+    {
+      "name": "androidRuntimeElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../kmp-countries-geo-android/0.2.0/kmp-countries-geo-android-0.2.0.module",
+        "group": "com.mukeshsolanki",
+        "module": "kmp-countries-geo-android",
+        "version": "0.2.0"
+      }
+    },
+    {
+      "name": "androidSourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "android",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "androidJvm"
+      },
+      "available-at": {
+        "url": "../../kmp-countries-geo-android/0.2.0/kmp-countries-geo-android-0.2.0.module",
+        "group": "com.mukeshsolanki",
+        "module": "kmp-countries-geo-android",
+        "version": "0.2.0"
+      }
+    },
+    {
+      "name": "iosArm64ApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../kmp-countries-geo-iosarm64/0.2.0/kmp-countries-geo-iosarm64-0.2.0.module",
+        "group": "com.mukeshsolanki",
+        "module": "kmp-countries-geo-iosarm64",
+        "version": "0.2.0"
+      }
+    },
+    {
+      "name": "iosArm64SourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../kmp-countries-geo-iosarm64/0.2.0/kmp-countries-geo-iosarm64-0.2.0.module",
+        "group": "com.mukeshsolanki",
+        "module": "kmp-countries-geo-iosarm64",
+        "version": "0.2.0"
+      }
+    },
+    {
+      "name": "iosArm64MetadataElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "ios_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../kmp-countries-geo-iosarm64/0.2.0/kmp-countries-geo-iosarm64-0.2.0.module",
+        "group": "com.mukeshsolanki",
+        "module": "kmp-countries-geo-iosarm64",
+        "version": "0.2.0"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64ApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../kmp-countries-geo-iossimulatorarm64/0.2.0/kmp-countries-geo-iossimulatorarm64-0.2.0.module",
+        "group": "com.mukeshsolanki",
+        "module": "kmp-countries-geo-iossimulatorarm64",
+        "version": "0.2.0"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64SourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../kmp-countries-geo-iossimulatorarm64/0.2.0/kmp-countries-geo-iossimulatorarm64-0.2.0.module",
+        "group": "com.mukeshsolanki",
+        "module": "kmp-countries-geo-iossimulatorarm64",
+        "version": "0.2.0"
+      }
+    },
+    {
+      "name": "iosSimulatorArm64MetadataElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "available-at": {
+        "url": "../../kmp-countries-geo-iossimulatorarm64/0.2.0/kmp-countries-geo-iossimulatorarm64-0.2.0.module",
+        "group": "com.mukeshsolanki",
+        "module": "kmp-countries-geo-iossimulatorarm64",
+        "version": "0.2.0"
+      }
+    }
+  ]
+}

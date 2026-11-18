@@ -1,0 +1,116 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "url": "../../kmp-countries-geo/0.2.0/kmp-countries-geo-0.2.0.module",
+    "group": "com.mukeshsolanki",
+    "module": "kmp-countries-geo",
+    "version": "0.2.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.8.2"
+    }
+  },
+  "variants": [
+    {
+      "name": "iosSimulatorArm64ApiElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-api",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "dependencies": [
+        {
+          "group": "com.mukeshsolanki",
+          "module": "kmp-countries",
+          "version": {
+            "requires": "0.2.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "kmp-countries-geo-iosSimulatorArm64Main-0.2.0.klib",
+          "url": "kmp-countries-geo-iossimulatorarm64-0.2.0.klib",
+          "size": 1941219,
+          "sha512": "619eaac5e34cd3003588ceae50f904c274bc5113298b57f2f7c7975cf4051d3a3d74a13b94d62da9eb24b37af25bdb9c7ec8f6b1b44c1d688732725c9ebff13e",
+          "sha256": "9ffbf036b28d32d2640388c46c19c9d344683dae5c034fc00e439ea5d7da0653",
+          "sha1": "74b07c6eeb3def32193a53f7a07f9b145c7f25b8",
+          "md5": "1060acc793ef00478d0644a1172b7159"
+        }
+      ]
+    },
+    {
+      "name": "iosSimulatorArm64SourcesElements-published",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-runtime",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "files": [
+        {
+          "name": "kmp-countries-geo-iossimulatorarm64-0.2.0-sources.jar",
+          "url": "kmp-countries-geo-iossimulatorarm64-0.2.0-sources.jar",
+          "size": 2105416,
+          "sha512": "06ee9561940da9c3c789e32775811961664618f3504e169cbc5a4da548c6a4ee2a400b63ba8461c07fa81b2bb8bad5da3b2d239382e49ec01023760d627a38b7",
+          "sha256": "7937edea2deda1c897ed933a85e6952f685bf7bde45ffd5de48077c1e092345f",
+          "sha1": "6a014508a29b848641ad0cc22350b30cc6d7d860",
+          "md5": "431a3a5a4f797b8e670830d2ae4ad4ce"
+        }
+      ]
+    },
+    {
+      "name": "iosSimulatorArm64MetadataElements-published",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.jvm.environment": "non-jvm",
+        "org.gradle.usage": "kotlin-metadata",
+        "org.jetbrains.kotlin.native.target": "ios_simulator_arm64",
+        "org.jetbrains.kotlin.platform.type": "native"
+      },
+      "dependencies": [
+        {
+          "group": "com.mukeshsolanki",
+          "module": "kmp-countries",
+          "version": {
+            "requires": "0.2.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "kmp-countries-geo-iossimulatorarm64-0.2.0-metadata.jar",
+          "url": "kmp-countries-geo-iossimulatorarm64-0.2.0-metadata.jar",
+          "size": 261,
+          "sha512": "1487e5a20c9e4d74f298e07c42e96a61be11b7a768c3fbc199ee138cd68e1fc2267d1cfe3f11f288acc05df755315344d052cc5f6f751f126ab4fe1caa5125ea",
+          "sha256": "c6deada2fac53b8ea6523dbda77597b128006674616f140f04df23264c6d1aa3",
+          "sha1": "2ad14aed781c4a73ed4dbb421966d408a0a06686",
+          "md5": "f43436d6bec321290f6af228ad602604"
+        }
+      ]
+    }
+  ]
+}
