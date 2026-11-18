@@ -21,8 +21,9 @@ GEO_FILE = ROOT / "countries-geo/src/commonMain/kotlin/com/mukeshsolanki/countri
 
 FIELD_SEPARATOR = "\u001f"
 ITEM_SEPARATOR = "\u001e"
+SUB_SEPARATOR = "\u001d"
 RECORD_SEPARATOR = "\n"
-FORBIDDEN_CHARS = {FIELD_SEPARATOR, ITEM_SEPARATOR, "\n", "\r"}
+FORBIDDEN_CHARS = {FIELD_SEPARATOR, ITEM_SEPARATOR, SUB_SEPARATOR, "\n", "\r"}
 MAX_CHUNK_BYTES = 60_000
 EXPECTED_COUNTRIES = 250
 EXPECTED_STATES = 5_327
@@ -90,19 +91,55 @@ def encode_country(country):
     return FIELD_SEPARATOR.join(fields)
 
 
-def unique_city_names(cities):
-    """Returns city names without duplicates, keeping their order."""
-    return list(dict.fromkeys(clean(city["name"]) for city in cities))
+def compact_coordinate(raw, limit):
+    """Validates a coordinate and renders it rounded to 4 decimals without trailing zeros."""
+    rendered = f"{round(float(coordinate(raw, limit)), 4):.4f}".rstrip("0").rstrip(".")
+    return "0" if rendered in ("-0", "") else rendered
 
 
-def encode_state(state):
-    """Encodes one state as a record of name, code, type and city names."""
+def zone_index(zone, zones):
+    """Returns the index of a time zone in the shared table, adding it when first seen."""
+    return zones.setdefault(clean(zone), len(zones))
+
+
+def unique_cities(cities, fallback_zone, zones):
+    """Encodes cities as name, latitude, longitude and zone index, keeping the first of each name."""
+    encoded = {}
+    for city in cities:
+        name = clean(city["name"])
+        if name in encoded:
+            continue
+        if city.get("latitude") is None or city.get("longitude") is None:
+            raise ValueError(f"City without coordinates: {name!r}")
+        fields = [
+            name,
+            compact_coordinate(city["latitude"], 90),
+            compact_coordinate(city["longitude"], 180),
+            str(zone_index(city.get("timezone") or fallback_zone, zones)),
+        ]
+        encoded[name] = SUB_SEPARATOR.join(fields)
+    return list(encoded.values())
+
+
+def country_zone(country):
+    """Returns the country's first IANA zone, the fallback for cities that have none."""
+    timezones = country.get("timezones") or []
+    has_cities = country["cities"] or any(state["cities"] for state in country["states"])
+    if not timezones:
+        if has_cities:
+            raise ValueError(f"Country with cities but no time zones: {country['iso3']}")
+        return None
+    return timezones[0]["zoneName"]
+
+
+def encode_state(state, fallback_zone, zones):
+    """Encodes one state as a record of name, code, type and encoded cities."""
     return FIELD_SEPARATOR.join(
         [
             clean(state["name"]),
             clean(state["iso2"]),
             clean(state["type"] or ""),
-            ITEM_SEPARATOR.join(unique_city_names(state["cities"])),
+            ITEM_SEPARATOR.join(unique_cities(state["cities"], fallback_zone, zones)),
         ]
     )
 
@@ -161,7 +198,7 @@ def country_source(records):
     )
 
 
-def geo_source(state_branches, direct_branches):
+def geo_source(state_branches, direct_branches, zones):
     """Builds the source of the generated geo file."""
     states = "".join(f'    "{iso3}" -> {kotlin_list(text)}\n' for iso3, text in state_branches)
     direct = "".join(f'    "{iso3}" -> {kotlin_list(text)}\n' for iso3, text in direct_branches)
@@ -170,9 +207,11 @@ def geo_source(state_branches, direct_branches):
         "/** Returns the encoded state records of a country, empty when it has no states. */\n"
         "internal fun geoChunks(iso3: String): List<String> = when (iso3) {\n"
         f"{states}    else -> emptyList()\n}}\n\n"
-        "/** Returns the encoded names of cities listed directly on a country, outside any state. */\n"
+        "/** Returns the encoded cities listed directly on a country, outside any state. */\n"
         "internal fun directCityChunks(iso3: String): List<String> = when (iso3) {\n"
-        f"{direct}    else -> emptyList()\n}}\n"
+        f"{direct}    else -> emptyList()\n}}\n\n"
+        "/** Returns the IANA time zone table that encoded cities point into, split into JVM-safe chunks. */\n"
+        f"internal fun timeZones(): List<String> = {kotlin_list(ITEM_SEPARATOR.join(zones))}\n"
     )
 
 
@@ -187,30 +226,31 @@ def check_totals(countries, states, state_cities, direct_cities):
 def main():
     """Downloads, validates and encodes the data, then writes both Kotlin files."""
     countries = fetch_countries()
-    records, state_branches, direct_branches = [], [], []
+    records, state_branches, direct_branches, zones = [], [], [], {}
     state_count = state_city_count = direct_city_count = kept_city_count = 0
     for country in countries:
         records.append(encode_country(country))
+        fallback_zone = country_zone(country)
         states = country["states"]
         if states:
             state_branches.append(
-                (country["iso3"], RECORD_SEPARATOR.join(encode_state(state) for state in states))
+                (country["iso3"], RECORD_SEPARATOR.join(encode_state(state, fallback_zone, zones) for state in states))
             )
         state_count += len(states)
         state_city_count += sum(len(state["cities"]) for state in states)
-        kept_city_count += sum(len(unique_city_names(state["cities"])) for state in states)
-        direct = unique_city_names(country["cities"])
+        kept_city_count += sum(len(unique_cities(state["cities"], fallback_zone, zones)) for state in states)
+        direct = unique_cities(country["cities"], fallback_zone, zones)
         if direct:
             direct_branches.append((country["iso3"], ITEM_SEPARATOR.join(direct)))
         direct_city_count += len(country["cities"])
 
     check_totals(len(countries), state_count, state_city_count, direct_city_count)
     write_file(COUNTRY_FILE, country_source(records))
-    write_file(GEO_FILE, geo_source(state_branches, direct_branches))
+    write_file(GEO_FILE, geo_source(state_branches, direct_branches, list(zones)))
     print(
         f"countries={len(countries)} states={state_count} cities_in_states={kept_city_count} "
         f"direct_cities={direct_city_count} duplicate_names_removed={state_city_count - kept_city_count} "
-        f"countries_with_states={len(state_branches)}"
+        f"countries_with_states={len(state_branches)} time_zones={len(zones)}"
     )
 
 

@@ -60,8 +60,9 @@ Countries.byIso2("DE")!!.localizedName("pt-BR")  // Alemanha, falls back to the 
 
 val states = us.states()
 val alabama = us.state("AL")                     // name "Alabama", type "state"
-val cities = alabama!!.cities
+val city = alabama!!.cities.first()              // name, latitude, longitude, timeZone
 val found = us.searchCities("Springfield")       // each match has a state and a city
+println("${city.name} ${city.latitude} ${city.timeZone}")
 ```
 
 ```swift
@@ -69,6 +70,8 @@ import KmpCountriesGeo
 
 let us = Countries.shared.byIso2(code: "US")
 let states = us?.states()
+let city = states?.first?.cities.first
+print(city?.name, city?.latitude, city?.timeZone)
 ```
 
 Calls are synchronous and thread-safe. Data is parsed on first use, and geo data is parsed per country.
@@ -77,6 +80,7 @@ Calls are synchronous and thread-safe. Data is parsed on first use, and geo data
 
 - **States include regions and provinces.** There's one level below country. `CountryState.type` holds the source's label, with 105 distinct values such as `province`, `region` or `county`. It's plain text and null for a few states.
 - **Cities include towns.** The source doesn't label which is which.
+- **Coordinates and time zones.** Coordinates are rounded to 4 decimals; time zone is the city's IANA zone, or the country's first zone when the source has none.
 - **Some places have no sub-levels.** 21 countries and territories have no states, and 599 states have no cities.
 - **Western Sahara** has 3 cities and no states. Use `directCities()` for these. In `searchCities`, they're returned with a null `state`.
 - **Duplicate names are expected.** Different states can share a name in one country, such as two named Minsk in Belarus. Use `code` to tell them apart. Repeated city names within one state appear once.

@@ -4,6 +4,7 @@ import com.mukeshsolanki.countries.Countries
 import com.mukeshsolanki.countries.Country
 import com.mukeshsolanki.countries.geo.generated.directCityChunks
 import com.mukeshsolanki.countries.geo.generated.geoChunks
+import com.mukeshsolanki.countries.geo.generated.timeZones
 
 /** Separates state records in the encoded data. */
 private const val RECORD_SEPARATOR = '\n'
@@ -13,6 +14,12 @@ private const val FIELD_SEPARATOR = '\u001F'
 
 /** Separates the items of a list field. */
 private const val ITEM_SEPARATOR = '\u001E'
+
+/** Separates the fields of one encoded city. */
+private const val CITY_FIELD_SEPARATOR = '\u001D'
+
+/** The IANA zone table, indexed by the zone number stored with each city. Built on first use. */
+private val zones: List<String> by lazy { timeZones().joinToString("").split(ITEM_SEPARATOR) }
 
 /** States by ISO3 code. The map is built once, and each country is parsed once when first used. */
 private val statesByIso3: Map<String, Lazy<List<CountryState>>> by lazy {
@@ -26,7 +33,7 @@ public fun Country.states(): List<CountryState> = statesByIso3[iso3]?.value.orEm
 public fun Country.state(code: String): CountryState? = states().firstOrNull { it.code == code }
 
 /** Returns the cities listed directly under this country, outside any state. */
-public fun Country.directCities(): List<String> = parseCities(directCityChunks(iso3).joinToString(""))
+public fun Country.directCities(): List<City> = parseCities(directCityChunks(iso3).joinToString(""))
 
 /**
  * Returns this country's cities whose name contains the trimmed query, ignoring case, including direct cities.
@@ -35,9 +42,9 @@ public fun Country.directCities(): List<String> = parseCities(directCityChunks(i
 public fun Country.searchCities(query: String): List<CityMatch> {
     val term = query.trim()
     val inStates = states().flatMap { state ->
-        state.cities.filter { it.contains(term, ignoreCase = true) }.map { CityMatch(state, it) }
+        state.cities.filter { it.name.contains(term, ignoreCase = true) }.map { CityMatch(state, it) }
     }
-    return inStates + directCities().filter { it.contains(term, ignoreCase = true) }.map { CityMatch(null, it) }
+    return inStates + directCities().filter { it.name.contains(term, ignoreCase = true) }.map { CityMatch(null, it) }
 }
 
 /** Decodes the states of one country, assembling only that country's text. */
@@ -57,6 +64,12 @@ private fun parseState(record: String): CountryState {
     )
 }
 
-/** Splits a list of city names, treating an empty field as no cities. */
-private fun parseCities(field: String): List<String> =
-    if (field.isEmpty()) emptyList() else field.split(ITEM_SEPARATOR)
+/** Decodes a list of encoded cities, treating an empty field as no cities. */
+private fun parseCities(field: String): List<City> =
+    if (field.isEmpty()) emptyList() else field.split(ITEM_SEPARATOR).map(::parseCity)
+
+/** Decodes one city from its name, latitude, longitude and zone index. */
+private fun parseCity(item: String): City {
+    val fields = item.split(CITY_FIELD_SEPARATOR).iterator()
+    return City(fields.next(), fields.next().toDouble(), fields.next().toDouble(), zones[fields.next().toInt()])
+}

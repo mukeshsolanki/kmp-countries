@@ -46,16 +46,16 @@ class GeoTest {
         assertEquals("Alabama", alabama.name)
         assertEquals("state", alabama.type)
         assertEquals(309, alabama.cities.size)
-        assertEquals("Abbeville", alabama.cities.first())
-        assertEquals("York", alabama.cities.last())
+        assertEquals("Abbeville", alabama.cities.first().name)
+        assertEquals("York", alabama.cities.last().name)
         val california = assertNotNull(country("USA").state("CA"))
         assertEquals(1065, california.cities.size)
-        assertEquals("Acalanes Ridge", california.cities.first())
-        assertEquals("Yucca Valley", california.cities.last())
-        assertTrue("San Francisco" in california.cities)
+        assertEquals("Acalanes Ridge", california.cities.first().name)
+        assertEquals("Yucca Valley", california.cities.last().name)
+        assertTrue(california.cities.any { it.name == "San Francisco" })
         val texas = assertNotNull(country("USA").state("TX"))
         assertEquals(1019, texas.cities.size)
-        assertEquals("Zapata", texas.cities.last())
+        assertEquals("Zapata", texas.cities.last().name)
     }
 
     /** Duplicate state names stay separate and are told apart by code. */
@@ -119,8 +119,9 @@ class GeoTest {
     fun directCitiesAreSearchable() {
         val westernSahara = country("ESH")
         assertTrue(westernSahara.states().isEmpty())
-        assertEquals(listOf("Gueltat Zemmour", "Imlili", "Smara"), westernSahara.directCities())
-        assertEquals(listOf(CityMatch(null, "Smara")), westernSahara.searchCities("Smara"))
+        assertEquals(listOf("Gueltat Zemmour", "Imlili", "Smara"), westernSahara.directCities().map { it.name })
+        val smara = westernSahara.directCities().first { it.name == "Smara" }
+        assertEquals(listOf(CityMatch(null, smara)), westernSahara.searchCities("Smara"))
         assertEquals(3, westernSahara.searchCities("").size)
         assertTrue(country("USA").directCities().isEmpty())
     }
@@ -131,10 +132,10 @@ class GeoTest {
         val matches = country("USA").searchCities("SAN FRAN")
         assertEquals(
             setOf("City and County of San Francisco", "San Francisco", "South San Francisco"),
-            matches.map { it.city }.toSet(),
+            matches.map { it.city.name }.toSet(),
         )
         assertTrue(matches.all { it.state?.code == "CA" })
-        assertEquals("75C", country("FRA").searchCities("Paris").first { it.city == "Paris" }.state?.code)
+        assertEquals("75C", country("FRA").searchCities("Paris").first { it.city.name == "Paris" }.state?.code)
         assertTrue(country("USA").searchCities("no such city").isEmpty())
     }
 
@@ -143,5 +144,37 @@ class GeoTest {
     fun citySearchTrimsQuery() {
         assertEquals(country("USA").searchCities("san fran"), country("USA").searchCities(" san fran  "))
         assertEquals(17282, country("USA").searchCities(" ").size)
+    }
+
+    /** A city carries its coordinates and IANA zone. */
+    @Test
+    fun ahmedabadHasCoordinatesAndZone() {
+        val city = country("IND").searchCities("Ahmedabad").first { it.city.name == "Ahmedabad" }.city
+        assertEquals(23.0, city.latitude, 0.1)
+        assertEquals(72.6, city.longitude, 0.1)
+        assertEquals("Asia/Kolkata", city.timeZone)
+    }
+
+    /** Western longitudes parse as negative numbers. */
+    @Test
+    fun westernHemisphereIsNegative() {
+        val sf = assertNotNull(country("USA").state("CA")).cities.first { it.name == "San Francisco" }
+        assertTrue(sf.longitude < -122 && sf.longitude > -123)
+        assertEquals("America/Los_Angeles", sf.timeZone)
+    }
+
+    /** Every city has a zone and in-range coordinates. */
+    @Test
+    fun everyCityHasAZoneAndValidCoordinates() {
+        val all = Countries.all.flatMap { c -> c.states().flatMap { it.cities } + c.directCities() }
+        assertEquals(149055, all.size)
+        assertTrue(all.all { it.timeZone.isNotEmpty() && it.latitude in -90.0..90.0 && it.longitude in -180.0..180.0 })
+    }
+
+    /** The last city of the largest country keeps its coordinates across chunk joins. */
+    @Test
+    fun usaLastCityKeepsCoordinatesAcrossChunks() {
+        val wy = assertNotNull(country("USA").state("WY")).cities.last()
+        assertTrue(wy.latitude in 40.0..46.0 && wy.longitude in -112.0..-103.0)
     }
 }
